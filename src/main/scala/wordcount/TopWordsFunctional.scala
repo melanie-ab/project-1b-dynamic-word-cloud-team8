@@ -1,3 +1,4 @@
+
 package wordcount
 
 import scala.io.Source
@@ -104,4 +105,3 @@ object TopWordsFunctional extends Config with WordProcessor with OutputHandler:
         val cloud = printWordCloud(counts, cloudSize, minFrequency)
         doOutput(cloud)
       }
-
