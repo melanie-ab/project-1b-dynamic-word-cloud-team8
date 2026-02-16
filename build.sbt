@@ -16,13 +16,17 @@ libraryDependencies ++= Seq(
   "org.openjfx" % "javafx-fxml" % "22.0.1"
 )
 
-fork in run := true // This allows the JVM to run with JavaFX
+// Run in a forked JVM (needed for JavaFX)
+fork in run := true
 
+// Set the main class for your project
+mainClass in (Compile, run) := Some("TopWordsFunctional.TopWordsFunctional")
 
-mainClass in (Compile/run) := Some("TopWordsFunctional.TopWordsFunctional")
-
+// Point to the logback.xml in resources
 javaOptions ++= Seq(
-  "-Dlogback.configurationFile=logback.xml"
+  "-Dlogback.configurationFile=src/main/resources/logback.xml"
 )
 
+// Enable Java App Packaging
 enablePlugins(JavaAppPackaging)
+
