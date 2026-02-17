@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # Step 1: Checkout the repo
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Java
+      # Step 2: Setup Java 17
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
@@ -27,14 +27,23 @@ jobs:
           chmod +x cs
           ./cs setup
 
-      # Step 4: Add sbt to PATH
+      # Step 4: Add sbt to PATH for all subsequent steps
       - name: Add sbt to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      # Step 5: Verify sbt
+      # Step 5: Cache sbt/Ivy dependencies for faster CI
+      - name: Cache sbt and Ivy2
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+          key: sbt-cache-${{ runner.os }}-${{ hashFiles('build.sbt') }}
+
+      # Step 6: Verify sbt installation
       - name: Verify sbt
         run: sbt sbtVersion
 
-      # Step 6: Run sbt tests with coverage
+      # Step 7: Run sbt tests with coverage
       - name: Run sbt tests with coverage
         run: sbt clean coverage test coverageReport
