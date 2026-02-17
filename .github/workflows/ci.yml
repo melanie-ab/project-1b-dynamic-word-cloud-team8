@@ -11,26 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 2a: Checkout your code
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # Checkout the repo
+      - uses: actions/checkout@v3
 
-      # Step 2b: Setup Java
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      # Install Java
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
           cache: sbt
 
-      # Step 2c: Install sbt
+      # Install sbt via Coursier
       - name: Install sbt
         run: |
-          curl -L -o sbt.deb https://github.com/sbt/sbt/releases/download/v1.9.5/sbt-1.9.5.deb
-          sudo dpkg -i sbt.deb
-          sbt sbtVersion
+          curl -fLo cs https://git.io/coursier-cli && chmod +x cs && ./cs setup
 
-      # Step 2d: Run your tests
-      - name: Run sbt tests
+      # Verify sbt version
+      - name: Verify sbt
+        run: sbt sbtVersion
+
+      # Run tests
+      - name: Run tests
         run: sbt clean test
 
