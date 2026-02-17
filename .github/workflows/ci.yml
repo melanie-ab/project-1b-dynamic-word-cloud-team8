@@ -14,26 +14,27 @@ jobs:
       # Step 1: Checkout code
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Java 17
+      # Step 2: Setup Java
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
       # Step 3: Install sbt via Coursier
-      - name: Install sbt
+      - name: Install sbt via Coursier
         run: |
           curl -fLo cs https://git.io/coursier-cli-linux
           chmod +x cs
           ./cs setup
-        # Make sbt available for all steps
+
+      # Step 4: Add sbt to PATH
       - name: Add sbt to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      # Step 4: Verify sbt
+      # Step 5: Verify sbt
       - name: Verify sbt
         run: sbt sbtVersion
 
-      # Step 5: Run sbt tests with coverage
+      # Step 6: Run sbt tests with coverage
       - name: Run sbt tests with coverage
         run: sbt clean coverage test coverageReport
