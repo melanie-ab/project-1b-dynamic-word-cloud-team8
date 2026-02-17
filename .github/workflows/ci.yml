@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
+      # Step 1: Checkout code
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Java 17
+      # Step 2: Setup Java
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
@@ -31,7 +31,7 @@ jobs:
       - name: Add sbt to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      # Step 5: Verify sbt installation
+      # Step 5: Verify sbt
       - name: Verify sbt
         run: sbt sbtVersion
 
