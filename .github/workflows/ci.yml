@@ -14,23 +14,24 @@ jobs:
       # Step 1: Checkout code
       - uses: actions/checkout@v4
 
-      # Step 2: Setup Java
+      # Step 2: Setup Java (needed for sbt)
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
       # Step 3: Setup Scala and sbt
-      - uses: scala/scala-setup@v3
+      - uses: olafurpg/setup-scala@v17
         with:
-          java-version: '17'
-          sbt-version: '1.9.5'
+          java-version: 17
+          sbt-version: 1.9.5
 
       # Step 4: Verify sbt installation
       - name: Verify sbt
         run: sbt sbtVersion
 
-      # Step 5: Run tests with coverage
-      - name: Run sbt tests
+      # Step 5: Run sbt tests with coverage
+      - name: Run sbt tests with coverage
         run: sbt clean coverage test coverageReport
+
 
