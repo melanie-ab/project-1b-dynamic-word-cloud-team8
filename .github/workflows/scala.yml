@@ -24,6 +24,7 @@ jobs:
           curl -fLo cs https://git.io/coursier-cli-linux
           chmod +x cs
           ./cs setup
+          # Add sbt to PATH for the rest of this job
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Verify sbt
