@@ -1,4 +1,4 @@
-package TopWordsFunctional
+package topwordsfunc
 
 object TopWordsFunctional {
 
@@ -11,17 +11,14 @@ object TopWordsFunctional {
       updateEvery: Int
   ): Iterator[(Map[String, Int], Int)] = {
 
-    // Step 1: remove nulls and assert non-null
     val cleaned: Iterator[String] =
       words.collect { case w: String => w.nn }
 
-    // Step 2: map to lowercase, trim safely
     val processed: Iterator[String] =
       cleaned
         .map(w => w.toLowerCase.nn.trim.nn)
         .filter(w => w.length >= minLength && !ignoredWords.contains(w))
 
-    // Sliding window word counts
     processed
       .scanLeft[(List[String], Map[String, Int], Int)](
         (List.empty[String], Map.empty[String, Int], 0)
@@ -70,10 +67,30 @@ object TopWordsFunctional {
       .mkString(" ")
   }
 
-  /** Stub to satisfy tests */
-  def handleArgs(args: Array[String]): Unit = {
-    println("handleArgs placeholder")
-    // You can implement CLI argument parsing here if needed
+  /** Parse CLI args into a Map with defaults */
+  def handleArgs(args: Array[String]): Map[String, Int] = {
+
+    // Default values
+    val defaults = Map(
+      "cloud-size" -> 10,
+      "min-frequency" -> 3,
+      "update-every" -> 10,
+      "window-size" -> 1000,
+      "length-at-least" -> 6
+    )
+
+    // Parse args: expected as --key value
+    args.sliding(2, 2).foldLeft(defaults) { (map, pair) =>
+      pair match {
+        case Array(key, value) if key.startsWith("--") =>
+          val cleanKey = key.drop(2) // remove --
+          try map + (cleanKey -> value.toInt)
+          catch {
+            case _: NumberFormatException => map // ignore invalid numbers
+          }
+        case _ => map
+      }
+    }
   }
 }
 

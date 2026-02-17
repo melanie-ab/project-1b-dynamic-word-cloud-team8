@@ -1,4 +1,7 @@
 package TopWordsFunctional
+import org.scalatest.funsuite.AnyFunSuite
+
+import topwordsfunc.TopWordsFunctional
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
