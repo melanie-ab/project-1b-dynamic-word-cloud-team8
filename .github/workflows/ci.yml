@@ -20,14 +20,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Step 3: Install sbt via Coursier (non-interactive)
-      - name: Install sbt
-        run: |
-          curl -fLo cs https://git.io/coursier-cli-linux
-          chmod +x cs
-          ./cs setup --yes
-          # Add sbt to PATH for all following steps
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      # Step 3: Setup Scala and sbt
+      - uses: olafurpg/setup-scala@v13
+        with:
+          java-version: 17
+          sbt-version: 1.9.4  # replace with your sbt version
 
       # Step 4: Verify sbt installation
       - name: Verify sbt
