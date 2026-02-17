@@ -20,12 +20,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Step 3: Setup sbt via a dedicated action
-      - name: Setup sbt
-        uses: olafurpg/setup-scala@v17
-        with:
-          java-version: '17'
-          sbt-version: '1.9.5'
+# Step 3: Setup Scala and sbt
+- uses: scala/scala-setup@v3
+  with:
+    java-version: '17'
+    sbt-version: '1.9.5'
 
       # Step 4: Verify sbt is installed
       - name: Verify sbt
