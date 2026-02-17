@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # Step 1: Checkout code
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Step 2: Setup Java
       - uses: actions/setup-java@v3
@@ -20,17 +20,17 @@ jobs:
           distribution: temurin
           java-version: 17
 
-# Step 3: Setup Scala and sbt
-- uses: scala/scala-setup@v3
-  with:
-    java-version: '17'
-    sbt-version: '1.9.5'
+      # Step 3: Setup Scala and sbt
+      - uses: scala/scala-setup@v3
+        with:
+          java-version: '17'
+          sbt-version: '1.9.5'
 
-      # Step 4: Verify sbt is installed
+      # Step 4: Verify sbt installation
       - name: Verify sbt
         run: sbt sbtVersion
 
       # Step 5: Run tests with coverage
-      - name: Run tests with coverage
+      - name: Run sbt tests
         run: sbt clean coverage test coverageReport
 
