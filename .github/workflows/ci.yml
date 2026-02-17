@@ -20,18 +20,21 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Step 3: Install sbt via Coursier
-      - name: Install sbt via Coursier
+      # Step 3: Setup Scala (optional if your project has scalaVersion in build.sbt)
+      - uses: olafurpg/setup-scala@v13
+        with:
+          java-version: 17
+          # remove sbt-version; this action only sets up Scala/Java
+
+      # Step 4: Install sbt manually
+      - name: Install sbt
         run: |
-          curl -fLo cs https://git.io/coursier-cli-linux
-          chmod +x cs
-          ./cs setup
+          echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+          curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x99E82A75642AC823" | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get install sbt -y
 
-      # Step 4: Add sbt to PATH
-      - name: Add sbt to PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      # Step 5: Verify sbt
+      # Step 5: Verify sbt installation
       - name: Verify sbt
         run: sbt sbtVersion
 
