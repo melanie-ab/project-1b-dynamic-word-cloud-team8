@@ -21,7 +21,7 @@ jobs:
           java-version: 17
 
       # Step 3: Setup Scala and sbt
-      - uses: olafurpg/setup-scala@v17
+      - uses: olafurpg/setup-scala@v13
         with:
           java-version: 17
           sbt-version: 1.9.5
@@ -33,5 +33,6 @@ jobs:
       # Step 5: Run sbt tests with coverage
       - name: Run sbt tests with coverage
         run: sbt clean coverage test coverageReport
+
 
 
