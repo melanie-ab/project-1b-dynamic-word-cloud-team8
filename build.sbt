@@ -1,32 +1,21 @@
-name := "hello-scalatest-scala"
+ThisBuild / scalaVersion := "3.3.1"
 
-version := "0.3"
+ThisBuild / version := "0.1.0-SNAPSHOT"
 
-scalaVersion := "3.3.3"
-
-scalacOptions += "@.scalacOptions.txt"
+lazy val root = project
+  .in(file("."))
+  .settings(
+    name := "project-1b-dynamic-word-cloud-team8"
+  )
 
 libraryDependencies ++= Seq(
-  "com.github.scopt" %% "scopt" % "4.1.0",
-  "org.slf4j" % "slf4j-api" % "1.7.36",
-  "org.scalatest" %% "scalatest" % "3.2.16" % Test,
-  "ch.qos.logback" % "logback-classic" % "1.4.11",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
-  "org.openjfx" % "javafx-controls" % "22.0.1",
-  "org.openjfx" % "javafx-fxml" % "22.0.1"
+  "org.scalatest" %% "scalatest" % "3.2.17" % Test
 )
 
-// Run in a forked JVM (needed for JavaFX)
-fork in run := true
-
-// Set the main class for your project
-mainClass in (Compile, run) := Some("TopWordsFunctional.TopWordsFunctional")
-
-// Point to the logback.xml in resources
-javaOptions ++= Seq(
-  "-Dlogback.configurationFile=src/main/resources/logback.xml"
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-unchecked",
+  "-Xfatal-warnings"
 )
-
-// Enable Java App Packaging
-enablePlugins(JavaAppPackaging)
 
